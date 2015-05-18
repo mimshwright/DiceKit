@@ -9,7 +9,15 @@
 /* Begin PBXBuildFile section */
 		34E489BB1B082B8100E59972 /* DiceKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 34E489BA1B082B8100E59972 /* DiceKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		34E489C11B082B8100E59972 /* DiceKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34E489B51B082B8100E59972 /* DiceKit.framework */; };
-		34E489C81B082B8100E59972 /* DiceKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E489C71B082B8100E59972 /* DiceKitTests.swift */; };
+		34E489D31B082B9000E59972 /* DiceCollectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E489D11B082B9000E59972 /* DiceCollectionTests.swift */; };
+		34E489D41B082B9000E59972 /* DieTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E489D21B082B9000E59972 /* DieTests.swift */; };
+		34E489D71B082BA400E59972 /* DiceCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E489D51B082BA400E59972 /* DiceCollection.swift */; };
+		34E489D81B082BA400E59972 /* Die.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E489D61B082BA400E59972 /* Die.swift */; };
+		34E489D91B082BB700E59972 /* Die.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E489D61B082BA400E59972 /* Die.swift */; };
+		34E489DA1B082BB900E59972 /* DiceCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E489D51B082BA400E59972 /* DiceCollection.swift */; };
+		34E48A0C1B084F9700E59972 /* DiceStringParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E48A0B1B084F9700E59972 /* DiceStringParser.swift */; };
+		34E48A0D1B084F9700E59972 /* DiceStringParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E48A0B1B084F9700E59972 /* DiceStringParser.swift */; };
+		34E48A0F1B084F9F00E59972 /* DiceStringParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E48A0E1B084F9F00E59972 /* DiceStringParserTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -28,7 +36,13 @@
 		34E489BA1B082B8100E59972 /* DiceKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DiceKit.h; sourceTree = "<group>"; };
 		34E489C01B082B8100E59972 /* DiceKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DiceKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		34E489C61B082B8100E59972 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		34E489C71B082B8100E59972 /* DiceKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiceKitTests.swift; sourceTree = "<group>"; };
+		34E489D11B082B9000E59972 /* DiceCollectionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiceCollectionTests.swift; sourceTree = "<group>"; };
+		34E489D21B082B9000E59972 /* DieTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DieTests.swift; sourceTree = "<group>"; };
+		34E489D51B082BA400E59972 /* DiceCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiceCollection.swift; sourceTree = "<group>"; };
+		34E489D61B082BA400E59972 /* Die.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Die.swift; sourceTree = "<group>"; };
+		34E489DB1B082BDB00E59972 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		34E48A0B1B084F9700E59972 /* DiceStringParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiceStringParser.swift; sourceTree = "<group>"; };
+		34E48A0E1B084F9F00E59972 /* DiceStringParserTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiceStringParserTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +67,7 @@
 		34E489AB1B082B8000E59972 = {
 			isa = PBXGroup;
 			children = (
+				34E489DB1B082BDB00E59972 /* Foundation.framework */,
 				34E489B71B082B8100E59972 /* DiceKit */,
 				34E489C41B082B8100E59972 /* DiceKitTests */,
 				34E489B61B082B8100E59972 /* Products */,
@@ -71,6 +86,9 @@
 		34E489B71B082B8100E59972 /* DiceKit */ = {
 			isa = PBXGroup;
 			children = (
+				34E48A0B1B084F9700E59972 /* DiceStringParser.swift */,
+				34E489D51B082BA400E59972 /* DiceCollection.swift */,
+				34E489D61B082BA400E59972 /* Die.swift */,
 				34E489BA1B082B8100E59972 /* DiceKit.h */,
 				34E489B81B082B8100E59972 /* Supporting Files */,
 			);
@@ -88,7 +106,9 @@
 		34E489C41B082B8100E59972 /* DiceKitTests */ = {
 			isa = PBXGroup;
 			children = (
-				34E489C71B082B8100E59972 /* DiceKitTests.swift */,
+				34E48A0E1B084F9F00E59972 /* DiceStringParserTests.swift */,
+				34E489D11B082B9000E59972 /* DiceCollectionTests.swift */,
+				34E489D21B082B9000E59972 /* DieTests.swift */,
 				34E489C51B082B8100E59972 /* Supporting Files */,
 			);
 			path = DiceKitTests;
@@ -163,6 +183,7 @@
 				TargetAttributes = {
 					34E489B41B082B8100E59972 = {
 						CreatedOnToolsVersion = 6.3;
+						DevelopmentTeam = 6546N3Y43Q;
 					};
 					34E489BF1B082B8100E59972 = {
 						CreatedOnToolsVersion = 6.3;
@@ -209,6 +230,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				34E489D81B082BA400E59972 /* Die.swift in Sources */,
+				34E489D71B082BA400E59972 /* DiceCollection.swift in Sources */,
+				34E48A0C1B084F9700E59972 /* DiceStringParser.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -216,7 +240,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				34E489C81B082B8100E59972 /* DiceKitTests.swift in Sources */,
+				34E48A0F1B084F9F00E59972 /* DiceStringParserTests.swift in Sources */,
+				34E48A0D1B084F9700E59972 /* DiceStringParser.swift in Sources */,
+				34E489DA1B082BB900E59972 /* DiceCollection.swift in Sources */,
+				34E489D41B082B9000E59972 /* DieTests.swift in Sources */,
+				34E489D31B082B9000E59972 /* DiceCollectionTests.swift in Sources */,
+				34E489D91B082BB700E59972 /* Die.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -268,7 +297,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -310,7 +339,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -323,27 +352,34 @@
 		34E489CC1B082B8100E59972 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = DiceKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		34E489CD1B082B8100E59972 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = DiceKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -399,6 +435,7 @@
 				34E489CD1B082B8100E59972 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		34E489CE1B082B8100E59972 /* Build configuration list for PBXNativeTarget "DiceKitTests" */ = {
 			isa = XCConfigurationList;
@@ -407,6 +444,7 @@
 				34E489D01B082B8100E59972 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
