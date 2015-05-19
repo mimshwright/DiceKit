@@ -45,7 +45,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		344B14001B0A77F400D76AAD /* Cartfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
 		34E489B51B082B8100E59972 /* DiceKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DiceKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		34E489B91B082B8100E59972 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		34E489BA1B082B8100E59972 /* DiceKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DiceKit.h; sourceTree = "<group>"; };
@@ -82,7 +81,6 @@
 		34E489AB1B082B8000E59972 = {
 			isa = PBXGroup;
 			children = (
-				344B14001B0A77F400D76AAD /* Cartfile */,
 				34E489B71B082B8100E59972 /* DiceKit */,
 				34E489C41B082B8100E59972 /* DiceKitTests */,
 				34E489B61B082B8100E59972 /* Products */,
