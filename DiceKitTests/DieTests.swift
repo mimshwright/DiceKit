@@ -46,8 +46,5 @@ class DieTests: XCTestCase {
         
         XCTAssertGreaterThanOrEqual(min, 1, "die with \(die.sides) sides rolls are never less than 1");
         XCTAssertLessThanOrEqual(max, die.sides, "die with \(die.sides) sides rolls are never more than number of sides");
-        
-        println(min);
-        println(max);
     }
 }

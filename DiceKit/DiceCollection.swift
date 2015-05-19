@@ -70,6 +70,10 @@ public class DiceCollection {
         self.dice = dice;
     }
     
+    public convenience init(dieFaces:UInt, dieCount:UInt = 1, constant:Int = 0) {
+        self.init(constant: constant);
+        addDieWithFaces (dieFaces, numberOfTimes: dieCount)
+    }
     
     /**
         Add the die multiple times.
@@ -77,10 +81,19 @@ public class DiceCollection {
         :param: die The Die to add.
         :param: numberOfTimes The number of times to add the die.
      */
-    public func addDie(die:Die, numberOfTimes count:Int = 1) -> Void {
+    public func addDie(die:Die, numberOfTimes count:UInt = 1) -> Void {
         for _ in 1...count {
-            dice.append(die);
+            dice.append(die)
         }
+    }
+    
+    /**
+        Alternate add function that creates dice automatically.
+        :param: dieFaces The number of faces on the die to add.
+        :param: numberOfTimes The number of times to add the die.
+    */
+    public func addDieWithFaces(dieFaces:UInt, numberOfTimes count:UInt = 1) -> Void {
+        addDie(Die(dieFaces), numberOfTimes: count)
     }
     
     /*
