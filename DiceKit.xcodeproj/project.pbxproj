@@ -200,7 +200,6 @@
 					};
 					34E489B41B082B8100E59972 = {
 						CreatedOnToolsVersion = 6.3;
-						DevelopmentTeam = 6546N3Y43Q;
 					};
 					34E489BF1B082B8100E59972 = {
 						CreatedOnToolsVersion = 6.3;
