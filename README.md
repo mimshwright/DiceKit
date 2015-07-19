@@ -3,9 +3,11 @@
 ## Use
 ```Swift
 // Create a die with 6 sides
-var die:Die = Die(6)
+let die:Die = Die(6)
 // roll it
 die.roll() // returns Int between 1 and 6
+// just for fun, you can create one with a game die emoji...
+🎲(6).roll() // returns Int between 1 and 6
 
 // Create a set of dice
 var diceSet:DiceCollection = DiceCollection()
@@ -22,6 +24,12 @@ diceSet.maxValue // 22
 diceSet.numberOfDice // 3
 diceSet.dice[0] // Die(6)
 
+// create a diceCollection by adding dice and/or ints
+diceSet = Die(8) + Die(6) + 5
+diceSet.constant // 5
+diceSet.NumberOfDice // 2
+diceSet += Die(4)
+diceSet.NumberOfDice // 3
 
 // Create a DiceCollection using a string...
 // this diceSet will be identical to the one above

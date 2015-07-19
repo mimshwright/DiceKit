@@ -12,39 +12,49 @@ import XCTest
 class DieTests: XCTestCase {
     
     func testInit() {
-        let die6 = Die(6);
-        XCTAssertEqual(die6.sides, 6, "number of sides set by constructor");
+        let die6 = Die(6)
+        XCTAssertEqual(die6.sides, 6, "number of sides set by constructor")
         
-        let die1 = Die(1);
-        XCTAssertEqual(die1.sides, 1, "Die can have 1 sides");
+        let die1 = Die(1)
+        XCTAssertEqual(die1.sides, 1, "Die can have 1 sides")
         
-        let die0 = Die(0);
-        XCTAssertEqual(die0.sides, 1, "Die can never have fewer than 1 side");
+        let die0 = Die(0)
+        XCTAssertEqual(die0.sides, 1, "Die can never have fewer than 1 side")
 
+        let die8 = 🎲(8)
+        XCTAssertEqual(die8.sides, 8, "🎲 is an alias to Die")
+        
+    }
+    
+    func testEquality() {
+        let dieA = Die(8)
+        let dieB = Die(8)
+        
+        XCTAssert (dieA == dieB, "Dice are equatable")
     }
     
     func testRoll() {
-        let die6 = Die(6);
-        rollDie(die6, repetitions: 1000);
+        let die6 = Die(6)
+        rollDie(die6, repetitions: 1000)
         
-        let die100 = Die(100);
-        rollDie(die100, repetitions: 1000);
+        let die100 = Die(100)
+        rollDie(die100, repetitions: 1000)
         
-        let die1 = Die(1);
-        rollDie(die1, repetitions: 1000);
+        let die1 = Die(1)
+        rollDie(die1, repetitions: 1000)
     }
     
     func rollDie (die:Die, repetitions:Int) {
-        var min:UInt = 1;
-        var max:UInt = 1;
+        var min:UInt = 1
+        var max:UInt = 1
         
         for _ in 1...repetitions {
-            let roll = UInt(die.roll());
-            if (roll > max) { max = roll; }
-            if (roll < min) { min = roll; }
+            let roll = UInt(die.roll())
+            if (roll > max) { max = roll }
+            if (roll < min) { min = roll }
         }
         
-        XCTAssertGreaterThanOrEqual(min, 1, "die with \(die.sides) sides rolls are never less than 1");
-        XCTAssertLessThanOrEqual(max, die.sides, "die with \(die.sides) sides rolls are never more than number of sides");
+        XCTAssertGreaterThanOrEqual(min, 1, "die with \(die.sides) sides rolls are never less than 1")
+        XCTAssertLessThanOrEqual(max, die.sides, "die with \(die.sides) sides rolls are never more than number of sides")
     }
 }

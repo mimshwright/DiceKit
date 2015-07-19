@@ -57,7 +57,7 @@ class DiceCollectionTests: XCTestCase {
         XCTAssertEqual(dice_noDice3.maxValue, 3, "max +3 -> 3");
         XCTAssertEqual(dice_empty.maxValue, 0, "max (empty) -> 0");
     }
-
+    
     func testNumberOfDice() {
         XCTAssertEqual(dice_1d20.numberOfDice, 1, "number of dice 1d20 -> 1");
         XCTAssertEqual(dice_2d6p3.numberOfDice, 2, "number of dice 2d6+3 -> 2");
@@ -71,5 +71,29 @@ class DiceCollectionTests: XCTestCase {
         let dc = DiceCollection(constant: 5);
         dc.addDie(d1, numberOfTimes: 10);
         XCTAssertEqual(dc.roll(), 15, "Roll should roll every die and add the constant");
+    }
+    
+    func testOperators() {
+        let dc = 🎲(6) + 🎲(4) + 2
+        XCTAssertEqual(dc.numberOfDice, 2, "Die + Die = DiceCollection")
+        XCTAssertEqual(dc.constant, 2, "DiceCollection + int = DiceCollection")
+        
+        XCTAssertEqual((dc + Die(4)).numberOfDice, 3, "DiceCollection + Die = DiceCollection")
+        
+        var dcPlusEquals = dc
+        dcPlusEquals += Die(10)
+        XCTAssertEqual(dcPlusEquals.numberOfDice, 3, "DiceCollection += Die")
+        
+        let dcPlusDc = dc + DiceCollection(dieFaces: 5, dieCount: 3, constant: 7)
+        XCTAssertEqual(dcPlusDc.numberOfDice, 5, "DiceCollection + DiceCollection = DiceCollection")
+        XCTAssertEqual(dcPlusDc.constant, 9, "DiceCollection + DiceCollection = DiceCollection")
+        
+        let diePlusConst = Die(4) + 2
+        XCTAssertEqual(diePlusConst.constant, 2, "Die + int = DiceCollection")
+        XCTAssertEqual(diePlusConst.numberOfDice, 1, "Die + int = DiceCollection")
+        XCTAssertEqual((diePlusConst - 1).constant, 1, "Die - int = DiceCollection")
+        
+        XCTAssertEqual(🎲(4) + 2, DiceCollection(dieFaces: 4, dieCount: 1, constant: 2), "DiceCollection is Equatable")
+        XCTAssertEqual(Die(4) + Die(6) + 3, Die(6) + 3 + Die(4), "Equality is commutable")
     }
 }

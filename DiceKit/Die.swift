@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class Die {
+public struct Die : Equatable {
     
     /**
         Number of sides / faces for this die. 
@@ -21,7 +21,7 @@ public class Die {
         :param: sides Number of sides for the die. Must be > 0.
     */
     public init(_ sides:UInt) {
-        self.sides = UInt(max(1, sides));
+        self.sides = UInt(max(1, sides))
     }
     
     /** 
@@ -30,7 +30,12 @@ public class Die {
         :returns: A random result between `1...sides`
      */
     public func roll () -> Int {
-        return 1 + Int(arc4random_uniform(UInt32(sides)));
+        return 1 + Int(arc4random_uniform(UInt32(sides)))
     }
-    
+}
+
+public typealias 🎲 = Die
+
+public func ==(lhs: Die, rhs: Die) -> Bool {
+    return lhs.sides == rhs.sides
 }
