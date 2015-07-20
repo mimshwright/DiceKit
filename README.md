@@ -39,5 +39,5 @@ diceSet.roll() // rolls 3d6+4 an Int between 7 and 22
 // DiceCollections can be converted back into strings using .description
 diceSet.description // "3d6+4"
 // note, the order and format of dice doesn't matter
-DiceCollection("1d6+4+2d6") == 🎲(6) + 🎲(6) + 🎲(6) + 4 == DiceCollection(dieFaces:6, dieCount:3, constant:4) // true
+DiceCollection("1d6+4+2d6") == 3*🎲(6) + 4 == DiceCollection(dieFaces:6, dieCount:3, constant:4) // true
 ```

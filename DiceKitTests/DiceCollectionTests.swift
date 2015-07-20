@@ -93,6 +93,10 @@ class DiceCollectionTests: XCTestCase {
         XCTAssertEqual(diePlusConst.numberOfDice, 1, "Die + int = DiceCollection")
         XCTAssertEqual((diePlusConst - 1).constant, 1, "Die - int = DiceCollection")
         
+        XCTAssertEqual(3 * Die(6), DiceCollection(dieFaces: 6, dieCount: 3), "Int * Die = DiceCollection")
+        
+        XCTAssertEqual(3*🎲(6) + 1*🎲(4) + 5, DiceCollection(dice:[Die(6),Die(6),Die(6),Die(4)], constant: 5), "Trying it all together")
+        
         XCTAssertEqual(🎲(4) + 2, DiceCollection(dieFaces: 4, dieCount: 1, constant: 2), "DiceCollection is Equatable")
         XCTAssertEqual(Die(4) + Die(6) + 3, Die(6) + 3 + Die(4), "Equality is commutable")
     }

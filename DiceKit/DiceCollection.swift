@@ -58,7 +58,7 @@ public class DiceCollection : Equatable {
     }
 
     
-    // MARK: Constructors
+    // MARK: Initializers
     
     public init() {
         dice = [Die]()
@@ -87,7 +87,6 @@ public class DiceCollection : Equatable {
         self.init(constant: constant)
         addDieWithFaces (dieFaces, numberOfTimes: dieCount)
     }
-    
     
     //MARK: methods
     
@@ -224,6 +223,13 @@ public func + (lhs:Int, rhs:Die) -> DiceCollection { return rhs + lhs }
 public func - (lhs:Die, rhs:Int) -> DiceCollection {
     return DiceCollection(dice: [lhs], constant: -rhs)
 }
+
+
+// Die * Int
+public func * (lhs:Die, rhs:UInt) -> DiceCollection {
+    return DiceCollection(dieFaces: lhs.sides, dieCount: rhs)
+}
+public func * (lhs:UInt, rhs:Die) -> DiceCollection { return rhs * lhs }
 
 
 // MARK: DiceStringParser
