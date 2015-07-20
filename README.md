@@ -34,9 +34,10 @@ diceSet += Die(4)
 diceSet.NumberOfDice // 3
 
 // Create a DiceCollection using a string...
-// this diceSet will be identical to the one above
-diceSet = DiceStringParser.parseDiceString("3d6+4")
+diceSet = DiceCollection("3d6+4")
 diceSet.roll() // rolls 3d6+4 an Int between 7 and 22
-// DiceCollections can be converted back into strings using toDiceString()
-diceSet.toDiceString() // "3d6+4"
+// DiceCollections can be converted back into strings using .description
+diceSet.description // "3d6+4"
+// note, the order and format of dice doesn't matter
+DiceCollection("1d6+4+2d6") == 🎲(6) + 🎲(6) + 🎲(6) + 4 == DiceCollection(dieFaces:6, dieCount:3, constant:4) // true
 ```

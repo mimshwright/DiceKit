@@ -97,12 +97,4 @@ class DiceCollectionTests: XCTestCase {
         XCTAssertEqual(Die(4) + Die(6) + 3, Die(6) + 3 + Die(4), "Equality is commutable")
     }
     
-    func testToString() {
-        let dc = DiceCollection(dieFaces: 6, dieCount: 3, constant: 2)
-        XCTAssertEqual(dc.toDiceString(), "3d6+2", "DiceCollections can convert to valid dice strings")
-        XCTAssertEqual(dc, DiceStringParser.parseDiceString( dc.toDiceString())!, "Dice Strings match the format of DiceStringFormatter")
-        XCTAssertEqual((dc + Die(3) + Die(100)).toDiceString(), "1d100+3d6+1d3+2", "More complex dice string")
-        XCTAssertEqual(DiceCollection(constant: 3).toDiceString(), "3", "Simple dice string")
-        XCTAssertEqual(DiceCollection(dice:[Die(4)], constant: -3).toDiceString(), "1d4-3", "handles negative constants correctly")
-    }
 }

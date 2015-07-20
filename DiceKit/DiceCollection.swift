@@ -8,6 +8,7 @@
 //
 
 import Foundation
+import Swift
 
 
 public class DiceCollection : Equatable {
@@ -63,6 +64,15 @@ public class DiceCollection : Equatable {
         dice = [Die]()
     };
     
+    public convenience init?(_ diceString:String) {
+        if let convertedString = DiceStringParser.parseDiceString(diceString) {
+            self.init(dice: convertedString.dice, constant: convertedString.constant)
+        } else {
+            self.init()
+            return nil
+        }
+    }
+    
     public convenience init(constant:Int) {
         self.init()
         self.constant = constant
@@ -117,43 +127,45 @@ public class DiceCollection : Equatable {
     }
  
     
-    public func toDiceString () -> String {
-        let dice = sortedDice()
-        var count = 0
-        var string = ""
-        
-        for i in 0..<dice.count {
-            var die = dice[i]
-            var nextDie:Die?
-            if (i < dice.count-1) {
-                nextDie = dice[i+1]
-            } else {
-                nextDie = nil
-            }
+    var description:String {
+        get {
+            let dice = sortedDice()
+            var count = 0
+            var string = ""
             
-            count += 1
-            
-            // if nextDie exists and isn't the same as this die or if the next die doesn't exist (this is the last die)
-            if (nextDie == nil ||
-                (nextDie != nil && nextDie! != die)) {
-                if (string != "") {
-                    string += "+"
+            for i in 0..<dice.count {
+                var die = dice[i]
+                var nextDie:Die?
+                if (i < dice.count-1) {
+                    nextDie = dice[i+1]
+                } else {
+                    nextDie = nil
                 }
                 
-                string += "\(count)d\(die.sides)"
+                count += 1
+                
+                // if nextDie exists and isn't the same as this die or if the next die doesn't exist (this is the last die)
+                if (nextDie == nil ||
+                    (nextDie != nil && nextDie! != die)) {
+                    if (string != "") {
+                        string += "+"
+                    }
+                    
+                    string += "\(count)d\(die.sides)"
 
-                count = 0
+                    count = 0
+                }
             }
-        }
-        
-        // write out constant
-        if (string != "" && constant >= 0) {
-            string += "+"
-        }
+            
+            // write out constant
+            if (string != "" && constant >= 0) {
+                string += "+"
+            }
 
-        string += "\(constant)"
-    
-        return string
+            string += "\(constant)"
+        
+            return string
+        }
     }
     
     private func sortedDice () -> [Die] {
@@ -211,4 +223,102 @@ public func + (lhs:Die, rhs:Int) -> DiceCollection {
 public func + (lhs:Int, rhs:Die) -> DiceCollection { return rhs + lhs }
 public func - (lhs:Die, rhs:Int) -> DiceCollection {
     return DiceCollection(dice: [lhs], constant: -rhs)
+}
+
+
+// MARK: DiceStringParser
+private class DiceStringParser {
+    
+    private static func parseDiceString (originalDiceString:String) -> DiceCollection? {
+        if (originalDiceString.isEmpty) {
+            return DiceCollection()
+        }
+        
+        var diceString = originalDiceString.lowercaseString
+        
+        if (validateDiceString(diceString) == false) {
+            return nil
+        }
+        
+        diceString = replaceMinusWithPlusMinus (diceString)
+        
+        var dice:DiceCollection? = DiceCollection()
+        
+        let segments = split(diceString) {$0 == "+"}
+        for segment in segments {
+            parseSegment( segment: segment, diceCollection: &dice)
+            
+            if (dice == nil) {
+                return nil
+            }
+        }
+        
+        return dice
+    }
+    
+    private static func validateDiceString (diceString:String) -> Bool {
+        let validCharachtersPattern = "[0-9d\\+\\-]"
+        let validChars = NSRegularExpression(pattern: validCharachtersPattern, options: NSRegularExpressionOptions(0), error: nil)
+        let range = NSMakeRange(0, count(diceString))
+        let validMatches = validChars?.matchesInString(diceString, options: NSMatchingOptions(0), range: range) as! [NSTextCheckingResult]
+        
+        return validMatches.count == count(diceString)
+    }
+    
+    private static func replaceMinusWithPlusMinus (diceString:String) -> String {
+        let minusSearch = NSRegularExpression(pattern: "\\-", options: NSRegularExpressionOptions(0), error: nil)
+        let range = NSMakeRange(0, count(diceString))
+        let replacedDiceString = minusSearch?.stringByReplacingMatchesInString(diceString, options: NSMatchingOptions(0), range: range, withTemplate: "+-")
+        
+        return replacedDiceString ?? diceString
+    }
+    
+    private static func parseSegment (#segment:String, inout diceCollection:DiceCollection?) {
+        if (diceCollection == nil) {
+            return Void()
+        }
+        
+        let nsStringSegment = segment as NSString
+        let dicePattern = "^\\d+d\\d+$"
+        let diceSearch = NSRegularExpression(pattern: dicePattern, options: NSRegularExpressionOptions(0), error: nil)
+        let range = NSMakeRange(0, nsStringSegment.length)
+        let diceMatchRanges = diceSearch?.matchesInString(segment, options: NSMatchingOptions(0), range: range) as! [NSTextCheckingResult]
+        let diceMatchResults = map(diceMatchRanges) { nsStringSegment.substringWithRange($0.range) }
+        let numberOfDiceMatches = diceMatchResults.count
+        
+        if (numberOfDiceMatches == 0) {
+            // try to match digits
+            let digitPattern = "^\\-?\\d+$"
+            let digitSearch = NSRegularExpression(pattern: digitPattern, options: NSRegularExpressionOptions(0), error: nil)
+            let digitMatchRanges = digitSearch?.matchesInString(segment, options: NSMatchingOptions(0), range: range) as! [NSTextCheckingResult]
+            let digitMatchResults = map(digitMatchRanges) { nsStringSegment.substringWithRange($0.range) }
+            let numberOfDigitMatches = digitMatchResults.count
+            
+            if (numberOfDigitMatches == 1) {
+                //parse digits
+                let constant = digitMatchResults[0].toInt() ?? 0
+                diceCollection!.constant += constant
+            } else {
+                // error
+                diceCollection = nil
+                return Void()
+            }
+            
+        } else if (numberOfDiceMatches == 1) {
+            // string as dice set
+            let diceString = diceMatchResults[0]
+            let diceComponents = split(diceString) { $0 == "d" }
+            
+            if (diceComponents.count == 2) {
+                let diceCount = UInt(diceComponents[0].toInt() ?? 0)
+                let dieFaces = UInt(diceComponents[1].toInt() ?? 1)
+                diceCollection!.addDieWithFaces( dieFaces, numberOfTimes: diceCount)
+            } else {
+                // error
+            }
+            
+        } else {
+            // error?
+        }
+    }
 }
