@@ -117,6 +117,45 @@ public class DiceCollection : Equatable {
     }
  
     
+    public func toDiceString () -> String {
+        let dice = sortedDice()
+        var count = 0
+        var string = ""
+        
+        for i in 0..<dice.count {
+            var die = dice[i]
+            var nextDie:Die?
+            if (i < dice.count-1) {
+                nextDie = dice[i+1]
+            } else {
+                nextDie = nil
+            }
+            
+            count += 1
+            
+            // if nextDie exists and isn't the same as this die or if the next die doesn't exist (this is the last die)
+            if (nextDie == nil ||
+                (nextDie != nil && nextDie! != die)) {
+                if (string != "") {
+                    string += "+"
+                }
+                
+                string += "\(count)d\(die.sides)"
+
+                count = 0
+            }
+        }
+        
+        // write out constant
+        if (string != "" && constant >= 0) {
+            string += "+"
+        }
+
+        string += "\(constant)"
+    
+        return string
+    }
+    
     private func sortedDice () -> [Die] {
         return dice.sorted { $0.sides > $1.sides }
     }

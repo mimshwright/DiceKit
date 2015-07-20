@@ -21,7 +21,6 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		34A84A9D1B5BE9A2004E2575 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 34A84A9C1B5BE9A2004E2575 /* README.md */; };
 		34E489BB1B082B8100E59972 /* DiceKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 34E489BA1B082B8100E59972 /* DiceKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		34E489C11B082B8100E59972 /* DiceKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34E489B51B082B8100E59972 /* DiceKit.framework */; };
 		34E489D31B082B9000E59972 /* DiceCollectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E489D11B082B9000E59972 /* DiceCollectionTests.swift */; };
@@ -268,7 +267,6 @@
 			files = (
 				34E489D81B082BA400E59972 /* Die.swift in Sources */,
 				34E489D71B082BA400E59972 /* DiceCollection.swift in Sources */,
-				34A84A9D1B5BE9A2004E2575 /* README.md in Sources */,
 				34E48A0C1B084F9700E59972 /* DiceStringParser.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
