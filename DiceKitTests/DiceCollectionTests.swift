@@ -24,7 +24,7 @@ class DiceCollectionTests: XCTestCase {
         dice_1d20.addDie(Die(20));
         
         // testing convenience init
-        var d6 = Die(6);
+        let d6 = Die(6);
         dice_2d6p3 = DiceCollection(dice: [d6,d6], constant: 3);
         
         // testing addDie with number of times

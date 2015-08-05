@@ -18,7 +18,7 @@ public struct Die : Equatable {
     
     /**
         Constructor.
-        :param: sides Number of sides for the die. Must be > 0.
+        - parameter sides: Number of sides for the die. Must be > 0.
     */
     public init(_ sides:UInt) {
         self.sides = UInt(max(1, sides))
@@ -27,7 +27,7 @@ public struct Die : Equatable {
     /** 
         Generate a random result based on the number of sides of the die.
     
-        :returns: A random result between `1...sides`
+        - returns: A random result between `1...sides`
      */
     public func roll () -> Int {
         return 1 + Int(arc4random_uniform(UInt32(sides)))

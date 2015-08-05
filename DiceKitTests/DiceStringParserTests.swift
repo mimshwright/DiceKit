@@ -116,17 +116,10 @@ class DiceStringParserTests: XCTestCase {
         diceOrNil = DiceCollection("3d 6+ 1");
         XCTAssertNil(diceOrNil, "Parser should fail on whitespace")
         
-        // empty string evaluates to 0 dice, 0 constant
+        // empty string evaluates to nil
         diceOrNil = DiceCollection("")
-        XCTAssertNotNil (diceOrNil, "DiceCollection should not be nil")
-        dice = diceOrNil!
-
-        XCTAssertTrue(dice.dice.isEmpty, "Dice Array should contain some dice" );
-        XCTAssertEqual(dice.numberOfDice, 0, "Creates the correct number of dice.");
-        XCTAssertEqual(dice.minValue, 0, "MinValue checks out.");
-        XCTAssertEqual(dice.maxValue, 0, "MaxValue checks out.");
-        XCTAssertEqual(dice.constant, 0, "Creates the correct constant.");
-        
+        XCTAssertNil (diceOrNil, "DiceCollection should be nil if given an empty string")
+                
         // empty string evaluates to 0 dice, 0 constant
         dice = DiceCollection("1d6+1")!
         let diceUppercase = DiceCollection("1D6+1")!

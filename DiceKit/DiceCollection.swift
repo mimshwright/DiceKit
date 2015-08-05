@@ -93,8 +93,8 @@ public class DiceCollection : Equatable {
     /**
         Add the die multiple times.
         
-        :param: die The Die to add.
-        :param: numberOfTimes The number of times to add the die.
+        - parameter die: The Die to add.
+        - parameter numberOfTimes: The number of times to add the die.
      */
     public func addDie(die:Die, numberOfTimes count:UInt = 1) -> Void {
         for _ in 1...count {
@@ -104,8 +104,8 @@ public class DiceCollection : Equatable {
     
     /**
         Alternate add function that creates dice automatically.
-        :param: dieFaces The number of faces on the die to add.
-        :param: numberOfTimes The number of times to add the die.
+        - parameter dieFaces: The number of faces on the die to add.
+        - parameter numberOfTimes: The number of times to add the die.
     */
     public func addDieWithFaces(dieFaces:UInt, numberOfTimes count:UInt = 1) -> Void {
         addDie(Die(dieFaces), numberOfTimes: count)
@@ -126,6 +126,10 @@ public class DiceCollection : Equatable {
     }
  
     
+    /*
+        Describes the DiceCollection in a format that is compatible with the 
+        DiceStringParser. E.g. "2d6+3" for two six-sieded dice and constant +3
+    */
     var description:String {
         get {
             let dice = sortedDice()
@@ -133,7 +137,7 @@ public class DiceCollection : Equatable {
             var string = ""
             
             for i in 0..<dice.count {
-                var die = dice[i]
+                let die = dice[i]
                 var nextDie:Die?
                 if (i < dice.count-1) {
                     nextDie = dice[i+1]
@@ -168,7 +172,7 @@ public class DiceCollection : Equatable {
     }
     
     private func sortedDice () -> [Die] {
-        return dice.sorted { $0.sides > $1.sides }
+        return dice.sort { $0.sides > $1.sides }
     }
 }
 
@@ -235,22 +239,29 @@ public func * (lhs:UInt, rhs:Die) -> DiceCollection { return rhs * lhs }
 // MARK: DiceStringParser
 private class DiceStringParser {
     
+    /*
+        Takes a string and returns a dice collection (optional).
+        param: originalDiceString, a string to convert in format similar to "2d6+4"
+    */
     private static func parseDiceString (originalDiceString:String) -> DiceCollection? {
         if (originalDiceString.isEmpty) {
-            return DiceCollection()
+            return nil
         }
         
         var diceString = originalDiceString.lowercaseString
         
+        // make sure the dice string is in a valid format
         if (validateDiceString(diceString) == false) {
             return nil
         }
         
+        // for convenience, replace - (minus) character with +-
         diceString = replaceMinusWithPlusMinus (diceString)
         
         var dice:DiceCollection? = DiceCollection()
         
-        let segments = split(diceString) {$0 == "+"}
+        // split the string into segments using + as the delimiter and convert the segements to strings.
+        let segments = split(diceString.characters) {$0 == "+"}.map { String($0) }
         for segment in segments {
             parseSegment( segment: segment, diceCollection: &dice)
             
@@ -262,47 +273,72 @@ private class DiceStringParser {
         return dice
     }
     
+    /*
+        Checks the string against a list of valid characters. 
+        They are: 0123456789d+-
+    */
     private static func validateDiceString (diceString:String) -> Bool {
-        let validCharachtersPattern = "[0-9d\\+\\-]"
-        let validChars = NSRegularExpression(pattern: validCharachtersPattern, options: NSRegularExpressionOptions(0), error: nil)
-        let range = NSMakeRange(0, count(diceString))
-        let validMatches = validChars?.matchesInString(diceString, options: NSMatchingOptions(0), range: range) as! [NSTextCheckingResult]
+        let range = NSMakeRange(0, diceString.characters.count)
+        let validCharsPattern = "[0-9d\\+\\-]"
+        let validChars: NSRegularExpression
+        do {
+            validChars = try NSRegularExpression(pattern: validCharsPattern, options: NSRegularExpressionOptions(rawValue: 0))
+        } catch _ {
+            return false
+        }
         
-        return validMatches.count == count(diceString)
+        let validMatches = validChars.matchesInString(diceString, options: NSMatchingOptions(rawValue: 0), range: range)
+        
+        return validMatches.count == diceString.characters.count
     }
     
     private static func replaceMinusWithPlusMinus (diceString:String) -> String {
-        let minusSearch = NSRegularExpression(pattern: "\\-", options: NSRegularExpressionOptions(0), error: nil)
-        let range = NSMakeRange(0, count(diceString))
-        let replacedDiceString = minusSearch?.stringByReplacingMatchesInString(diceString, options: NSMatchingOptions(0), range: range, withTemplate: "+-")
+        let minusSearch: NSRegularExpression?
+        do {
+            minusSearch = try NSRegularExpression(pattern: "\\-", options: NSRegularExpressionOptions(rawValue: 0))
+        } catch _ {
+            minusSearch = nil
+        }
+        let range = NSMakeRange(0, diceString.characters.count)
+        let replacedDiceString = minusSearch!.stringByReplacingMatchesInString(diceString, options: NSMatchingOptions(rawValue: 0), range: range, withTemplate: "+-")
         
         return replacedDiceString ?? diceString
     }
     
-    private static func parseSegment (#segment:String, inout diceCollection:DiceCollection?) {
+    private static func parseSegment (segment segment:String, inout diceCollection:DiceCollection?) {
         if (diceCollection == nil) {
             return Void()
         }
         
         let nsStringSegment = segment as NSString
         let dicePattern = "^\\d+d\\d+$"
-        let diceSearch = NSRegularExpression(pattern: dicePattern, options: NSRegularExpressionOptions(0), error: nil)
+        let diceSearch: NSRegularExpression?
+        do {
+            diceSearch = try NSRegularExpression(pattern: dicePattern, options: NSRegularExpressionOptions(rawValue: 0))
+        } catch _ {
+            diceSearch = nil
+        }
         let range = NSMakeRange(0, nsStringSegment.length)
-        let diceMatchRanges = diceSearch?.matchesInString(segment, options: NSMatchingOptions(0), range: range) as! [NSTextCheckingResult]
-        let diceMatchResults = map(diceMatchRanges) { nsStringSegment.substringWithRange($0.range) }
+        let diceMatchRanges = diceSearch!.matchesInString(segment, options: NSMatchingOptions(rawValue: 0), range: range)
+        let diceMatchResults = diceMatchRanges.map { nsStringSegment.substringWithRange($0.range) }
         let numberOfDiceMatches = diceMatchResults.count
         
         if (numberOfDiceMatches == 0) {
             // try to match digits
             let digitPattern = "^\\-?\\d+$"
-            let digitSearch = NSRegularExpression(pattern: digitPattern, options: NSRegularExpressionOptions(0), error: nil)
-            let digitMatchRanges = digitSearch?.matchesInString(segment, options: NSMatchingOptions(0), range: range) as! [NSTextCheckingResult]
-            let digitMatchResults = map(digitMatchRanges) { nsStringSegment.substringWithRange($0.range) }
+            let digitSearch: NSRegularExpression?
+            do {
+                digitSearch = try NSRegularExpression(pattern: digitPattern, options: NSRegularExpressionOptions(rawValue: 0))
+            } catch _ {
+                digitSearch = nil
+            }
+            let digitMatchRanges = digitSearch!.matchesInString(segment, options: NSMatchingOptions(rawValue: 0), range: range)
+            let digitMatchResults = digitMatchRanges.map { nsStringSegment.substringWithRange($0.range) }
             let numberOfDigitMatches = digitMatchResults.count
             
             if (numberOfDigitMatches == 1) {
                 //parse digits
-                let constant = digitMatchResults[0].toInt() ?? 0
+                let constant = Int(digitMatchResults[0]) ?? 0
                 diceCollection!.constant += constant
             } else {
                 // error
@@ -313,11 +349,11 @@ private class DiceStringParser {
         } else if (numberOfDiceMatches == 1) {
             // string as dice set
             let diceString = diceMatchResults[0]
-            let diceComponents = split(diceString) { $0 == "d" }
+            let diceComponents = split(diceString.characters) { $0 == "d" }.map { String($0) }
             
             if (diceComponents.count == 2) {
-                let diceCount = UInt(diceComponents[0].toInt() ?? 0)
-                let dieFaces = UInt(diceComponents[1].toInt() ?? 1)
+                let diceCount = UInt(diceComponents[0]) ?? 0
+                let dieFaces = UInt(diceComponents[1]) ?? 1
                 diceCollection!.addDieWithFaces( dieFaces, numberOfTimes: diceCount)
             } else {
                 // error
